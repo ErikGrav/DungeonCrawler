@@ -18,7 +18,7 @@
 
 using namespace std;
 
-void main() {
+int main(int argc, char** argv) {
 	Hero hero;
 	Glob glob1;
 
@@ -42,28 +42,31 @@ void main() {
 	glob1.makeDumbNoise();
 
 	//pointers
-
 	GlobUsingPointers();
+	GLobTestingPolyAndCasting(glob1);
 
-	//polymorphism
-	Character* charPtr = &glob1;
-	charPtr->takeDamage(-5678);
-	charPtr->displayStats();
-	//casting
-	Glob* globPtr2 = (Glob*)charPtr;
-	globPtr2->makeDumbNoise();
+
+
+
 
 	//initalise SDL2
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0) 
 	{
+		//if init not return 0, then init failed
+		cout << "SDL Init Error: " << SDL_GetError() << endl;
+		system("pause");
+		return 1;
+	}
+	//TODO initialise mimage, mixer ttf
+	// 
+	    //header, x pos, y pos, x size, y size, visiblity
+	SDL_Window* window = SDL_CreateWindow("!! Duungeon Crawler !!", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 320, 240, SDL_WINDOW_SHOWN);
 
-
-
-
-
-
-
-
+	if (window == NULL) {
+		cout << "SDL window Error: " << SDL_GetError() << endl;
+		SDL_Quit();
+		system("pause");
+		return 1;
 	}
 
 
@@ -72,9 +75,19 @@ void main() {
 
 
 
-
-
 	system("pause");
+	return 0;
+}
+
+void GLobTestingPolyAndCasting(Glob& glob1)
+{
+	//polymorphism
+	Character* charPtr = &glob1;
+	charPtr->takeDamage(-5678);
+	charPtr->displayStats();
+	//casting
+	Glob* globPtr2 = (Glob*)charPtr;
+	globPtr2->makeDumbNoise();
 }
 
 void GlobUsingPointers()
