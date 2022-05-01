@@ -29,25 +29,11 @@ int main(int argc, char** argv) {
 	RoomOne(hero);
 
 	//build an object of class type chracter: 
-
-	//Room 2? glob?
-	glob1.setupStats(10, 2, 3, 2);
-	hero.takeDamage(glob1.getDamage());
-	glob1.takeDamage(hero.getDamage());
-	glob1.makeDumbNoise();
-	cout << "Hero stats: " << endl;
-	hero.displayStats();
-	cout << "Glob stats: " << endl;
-	glob1.displayStats();
-	glob1.makeDumbNoise();
+	Room2Automated(glob1, hero);
 
 	//pointers
 	GlobUsingPointers();
 	GLobTestingPolyAndCasting(glob1);
-
-
-
-
 
 	//initalise SDL2
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0) 
@@ -63,21 +49,28 @@ int main(int argc, char** argv) {
 	SDL_Window* window = SDL_CreateWindow("!! Duungeon Crawler !!", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 320, 240, SDL_WINDOW_SHOWN);
 
 	if (window == NULL) {
-		cout << "SDL window Error: " << SDL_GetError() << endl;
+		cout << "SDL "<< typeid(window).name() <<  " Error: " << SDL_GetError() << endl;
+		SDL_Quit();
+		system("pause");
+		return 1;
+	}
+	
+
+	SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+	
+	if (renderer == NULL) {
+		cout << "SDL "<< typeid(renderer).name() << " Error: " << SDL_GetError() << endl;
 		SDL_Quit();
 		system("pause");
 		return 1;
 	}
 
 
-
-
-
-
-
 	system("pause");
 	return 0;
 }
+
+
 
 void GLobTestingPolyAndCasting(Glob& glob1)
 {
@@ -106,17 +99,7 @@ void GlobUsingPointers()
 }
 
 
-void RoomOne(Hero &_hero)
-{
-	cout << "In the first room stands a tall slender figure in a cloak" << endl;
-	cout << " He turns towards you.. ' HALT! DO NOT STEP ANY FURTHER' " << endl;
-	cout << " ' To cross this bridge of death you must answer me these questions: ' " << endl;
 
-	int dmg = puzzle1() + puzzle2(_hero.getDamage(), _hero.getAGI()) + puzzleString(_hero.getName(), "What is your name?") + puzzleString(_hero.getFavColor(), "What is your favourite color?");
-	_hero.takeDamage(_hero.getHP() - dmg);
-	cout << "You are inflicted " << dmg << " amount of dmg! your hp is now " << _hero.getHP() << endl;
-
-}
 
 void SetupCharacterStats(Hero &_hero)//bool& characterSetup, int& choise, int& hp, int& str, int& def, int& agi)
 {
