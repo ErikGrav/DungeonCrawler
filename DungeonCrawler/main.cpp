@@ -9,6 +9,12 @@
 #include "Glob.h"
 #include "Mimic.h"
 #include "main.h"
+//SDL libs
+#include <SDL.h>
+#include <SDL_image.h>
+#include <SDL_ttf.h>
+#include <SDL_mixer.h>
+
 
 using namespace std;
 
@@ -26,11 +32,9 @@ void main() {
 
 	//Room 2? glob?
 	glob1.setupStats(10, 2, 3, 2);
-
 	hero.takeDamage(glob1.getDamage());
 	glob1.takeDamage(hero.getDamage());
 	glob1.makeDumbNoise();
-
 	cout << "Hero stats: " << endl;
 	hero.displayStats();
 	cout << "Glob stats: " << endl;
@@ -39,6 +43,42 @@ void main() {
 
 	//pointers
 
+	GlobUsingPointers();
+
+	//polymorphism
+	Character* charPtr = &glob1;
+	charPtr->takeDamage(-5678);
+	charPtr->displayStats();
+	//casting
+	Glob* globPtr2 = (Glob*)charPtr;
+	globPtr2->makeDumbNoise();
+
+	//initalise SDL2
+	if (SDL_Init(SDL_INIT_EVERYTHING) != 0) 
+	{
+
+
+
+
+
+
+
+
+	}
+
+
+
+
+
+
+
+
+
+	system("pause");
+}
+
+void GlobUsingPointers()
+{
 	Glob* globPtr = new Glob();
 	(*globPtr).displayStats();
 	globPtr->takeDamage(3455);
@@ -50,33 +90,7 @@ void main() {
 		cout << "glob ptr pointing to something?" << endl;
 	else
 		cout << "glob is dead!!!" << endl;
-
-
-	//polymorphism
-	Character* charPtr = &glob1;
-	charPtr->takeDamage(-5678);
-	charPtr->displayStats();
-	//casting
-	Glob* globPtr2 = (Glob*)charPtr;
-	globPtr2->makeDumbNoise();
-
-
-
-	system("pause");
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 void RoomOne(Hero &_hero)
